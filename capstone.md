@@ -15,19 +15,19 @@ crashed in the French Alps, killing all aboard.
 This crashed captured the attention of internet users as details emerged that showed that the crash was a
 deliberate suicide by the co-pilot.
 
+Bit.ly has provided data extracts from the period of the emergence of this story which will be used to
+show the development of this story.
+
 ## Capstone question
 
 The capstone project proposed explores the internet activity that followed this disaster:
 
-1. traffic segmented by location
-The story is expected to have differing levels of interest by location.
+1. **traffic segmented by location**: The story is expected to have differing levels of interest by location.
 
-2. traffic segmented by time
-The story is expected to have differing levels of interest by time. In particular, as new information
+2. **traffic segmented by time**: The story is expected to have differing levels of interest by time. In particular, as new information
 is discovered and confirmed by investigators, the story is expected to have a resurgence of interest.
 
-3. traffic identified by topic
-Topic modeling will identify different topics in the URLs, and these will have differing levels of interest.
+3. **traffic identified by topic**: Topic modeling will identify different topics in the URLs, and these will have differing levels of interest.
 
 In general, the capstone project addresses how data science tools can be applied to discover the
 characteristics of the rapid emergence of a story of interest on the internet.
@@ -70,22 +70,28 @@ The deliverables for this project will be at least one of these things:
 
 ## Plan of action
 
-1. Download data
-1.1 Copy from S3 storage to local machine
-1.2 Backup data in bit.ly S3 storage to personal S3 storage
-2. Summarize data
-2.1 Calculate the top short URLs by hits in each 10 minute data set
-2.2 Aggregate the top short URLs into a single ranking over 72 hours
-3. Download the HTML of the URLs identified as top Germanwings stories
-4. Store the HTML for processing in a database
-5. Apply analysis to database
-5.1 Analyze by location/timezone
-5.2 Analyze by time
-5.3 Apply topic modeling to determine top topics over time/location
-6. Produce project collateral
-6.1 Create flask/bootstrap website
-6.2 Create slide deck for presentation
-6.3 Create infographic
+### Download data
+
+1. Copy from S3 storage to local machine
+2. Backup data in bit.ly S3 storage to personal S3 storage
+
+### Summarize data
+1. Calculate the top short URLs by hits in each 10 minute data set
+2. Aggregate the top short URLs into a single ranking over 72 hours
+
+### Download the HTML of the URLs identified as top Germanwings stories
+
+### Store the HTML for processing in a database
+
+### Apply analysis to database
+1. Analyze by location/timezone
+2. Analyze by time
+3. Apply topic modeling to determine top topics over time/location
+
+### Produce project collateral
+1. Create flask/bootstrap website
+2. Create slide deck for presentation
+3. Create infographic
 
 ## Publishing
 
