@@ -52,7 +52,8 @@ def main():
         # 66 second for 10 minutes of data (system json)
         # 58 second for 10 minutes of data (simplejson)
         print(dumper(item))
-    print("{0} records written".format(i), file=stderr)
+        records = i
+    print("{0} records written".format(records), file=stderr)
 
 
 if __name__ == '__main__':
