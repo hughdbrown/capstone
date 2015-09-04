@@ -89,4 +89,4 @@ The deliverables for this project will be at least one of these things:
 The project will be published in two ways:
 
 1. a website that has the finished product
-2. a github repo that contains all the code and script used for the project (but not the data)
+2. a [github repo](https://github.com/hughdbrown/capstone) that contains all the code and script used for the project (but not the data)
