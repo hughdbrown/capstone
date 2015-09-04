@@ -20,14 +20,14 @@ deliberate suicide by the co-pilot.
 The capstone project proposed explores the internet activity that followed this disaster:
 
 1. traffic segmented by location
-The story is expected to have differing levels of interest by location.
+* The story is expected to have differing levels of interest by location.
 
 2. traffic segmented by time
-The story is expected to have differing levels of interest by time. In particular, as new information
+* The story is expected to have differing levels of interest by time. In particular, as new information
 is discovered and confirmed by investigators, the story is expected to have a resurgence of interest.
 
 3. traffic identified by topic
-Topic modeling will identify different topics in the URLs, and these will have differing levels of interest.
+* Topic modeling will identify different topics in the URLs, and these will have differing levels of interest.
 
 In general, the capstone project addresses how data science tools can be applied to discover the
 characteristics of the rapid emergence of a story of interest on the internet.
