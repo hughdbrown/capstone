@@ -1,0 +1,16 @@
+"""
+*a : browser user agent
+*c : country (two-letter code)
+*ckw: custom keyword
+*cy : city (optional)
+*dp : Discarded parameters (optional)
+*g : bitly global hash identifier
+*h : bitly user hash identifier
+*kw : keyword alias for user hash (When present, this is the link decoded, not user hash or global hash [huh? -AL]) (optional)
+?mc
+*nk : repeat client (if it's 1 we've seen that cookie before, 0 otherwise)
+*pp : Passed parameters (optional)
+*t : timestamp (utc)
+*tz : timezone
+*u : Long URL
+"""
