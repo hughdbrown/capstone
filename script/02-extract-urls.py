@@ -8,7 +8,7 @@ from sys import stdin, stderr
 from collections import Counter
 from operator import itemgetter
 
-from . import stdin_reader
+from utils import stdin_reader
 
 
 def main():

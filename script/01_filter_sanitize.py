@@ -14,7 +14,7 @@ from sys import stderr
 from simplejson import dumps as dumper
 from datetime import datetime
 
-from . import COLUMNS, stdin_reader
+from utils import COLUMNS, stdin_reader
 
 
 def filter_dicts(series):

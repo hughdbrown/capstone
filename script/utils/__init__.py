@@ -1,10 +1,13 @@
 """
 Shared constants and code
 """
-import simplejson
-from sys import stdin
+from __future__ import print_function
+
+from sys import stdin, stderr
 import os
 import os.path
+
+import simplejson
 
 
 # See schema.txt for explanation of columns
@@ -27,5 +30,24 @@ def filter_files_by_ext(directory, ext):
     """
     for filename in os.listdir(directory):
         if os.path.splitext(filename)[1] == ext:
-            yield filename
+            yield os.path.join(directory, filename)
 
+
+def coalesce_jsonfiles(srcdir, ext):
+    """
+    This is really a call to `reduce`:
+    
+    dest = reduce(
+        filter_files_by_ext("map-urls-json/", ".json"),
+        lambda x, y: x.update(stdin_reader(y)),
+        {}
+    )
+    """
+    dest = {}
+    for filename in filter_files_by_ext(srcdir, ext):
+        print(filename, file=stderr)
+        with open(filename) as f:
+            for d in stdin_reader(f):
+                print("\t{0} records read".format(len(d)), file=stderr)
+                dest.update(d)
+    return dest

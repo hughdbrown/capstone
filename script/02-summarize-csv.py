@@ -10,7 +10,7 @@ from csv import DictReader
 from collections import Counter
 from operator import itemgetter
 
-from . import filter_files_by_ext
+from utils import filter_files_by_ext
 
 FIELDNAMES = ["filename", "count"]
 
