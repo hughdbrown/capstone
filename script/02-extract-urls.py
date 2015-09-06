@@ -5,18 +5,10 @@ for each data file.
 from __future__ import print_function, absolute_import, division
 
 from sys import stdin, stderr
-import simplejson
 from collections import Counter
 from operator import itemgetter
 
-# See schema.txt for explanation of columns
-COLUMNS = set(['a', 'c', 'ckw', 'cy', 'dp', 'g', 'h', 'kw', 'mc', 'nk', 'pp', 't', 'tz', 'u'])
-
-
-def stdin_reader(f):
-    loader = simplejson.loads
-    for line in f:
-        yield loader(line)
+from . import stdin_reader
 
 
 def main():
