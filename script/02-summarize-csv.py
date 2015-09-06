@@ -24,7 +24,7 @@ def append_to_counter(c, filename):
         reader = DictReader(f, fieldnames=FIELDNAMES)
         for row in reader:
             c[row["filename"]] += int(row["count"])
-    
+
 
 def main():
     """
