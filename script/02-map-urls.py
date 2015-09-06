@@ -15,7 +15,7 @@ def main():
     Create a dict to store the mapping.
     *g : bitly global hash identifier
     *u : Long URL
-    
+
     Need to write this out as JSON because there are no punctuation marks I can find that
     do not also appear in the long urls -- meaning that there is nothing obvious to use as
     a split character in a CSV.
