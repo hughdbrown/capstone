@@ -6,21 +6,14 @@ for each data file.
 from __future__ import print_function, absolute_import, division
 
 from sys import stderr
-import os
-import os.path
 from csv import DictReader
 from collections import Counter
 from operator import itemgetter
 
+from . import filter_files_by_ext
+
 FIELDNAMES = ["filename", "count"]
 
-def csvfiles():
-    """
-    Get the names of the .csv files in the current directory
-    """
-    for filename in os.listdir('hits-csv/'):
-        if os.path.splitext(filename)[1] == '.csv':
-            yield filename
 
 def append_to_counter(c, filename):
     """
@@ -38,7 +31,7 @@ def main():
     Create a Counter that aggregates counts from multiple CSV files
     """
     c = Counter()
-    for filename in csvfiles():
+    for filename in filter_files_by_ext('hits-csv/', ".csv"):
         append_to_counter(c, filename)
     for key, value in sorted(c.items(), reverse=True, key=itemgetter(1)):
         print("{0}, {1}".format(key, value))
