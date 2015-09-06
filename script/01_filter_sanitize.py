@@ -10,20 +10,11 @@ pipeline so there are no examples of running it locally.
 """
 from __future__ import print_function, absolute_import, division
 
-from sys import stdin, stderr
-from simplejson import loads as loader, dumps as dumper
+from sys import stderr
+from simplejson import dumps as dumper
 from datetime import datetime
 
-# See schema.txt for explanation of columns
-COLUMNS = set(['a', 'c', 'ckw', 'cy', 'dp', 'g', 'h', 'kw', 'mc', 'nk', 'pp', 't', 'tz', 'u'])
-
-
-def stdin_reader():
-    """
-    A generator that translate a line of JSON read from stdin to a python dict
-    """
-    for line in stdin:
-        yield loader(line)
+from . import COLUMNS, stdin_reader
 
 
 def filter_dicts(series):
