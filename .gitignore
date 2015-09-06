@@ -1,3 +1,5 @@
 *.pyc
 data-capstone/
 */.DS_Store
+*.py-e
+*.sh-e
