@@ -1,0 +1,13 @@
+#
+# The documentation server build script.
+#
+
+require 'find'
+require 'rake'
+require 'rake/clean'
+
+TMP_DIR = "/tmp"
+HOME = ENV["HOME"]
+
+# Load other rake tasks
+Dir.glob('tasks/*.rake') {|f| load(f) }
