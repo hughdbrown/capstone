@@ -2,6 +2,8 @@
 Script to initialize a mongo database (named 'data') and collection (named 'urls')
 via pymongo
 """
+from __future__ import division, print_function, absolute_import
+
 import pymongo
 
 
