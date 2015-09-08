@@ -35,7 +35,7 @@ def url_counts():
     from precomputed data. Use this to filter out low hit counts.
     """
     print("Opening CSV file of url counts", file=stderr)
-    with open("hits-csv/aggregated.csv") as f:
+    with open("hits-csv/hits-aggregated.csv") as f:
         print("Reading CSV", file=stderr)
         reader = DictReader(f, fieldnames=FIELDNAMES)
         return {
@@ -56,27 +56,50 @@ def load_url(args):
     short_url, long_url = args
     count = URL_COUNTS[short_url]
     doc = {'short_url': short_url, 'long_url': long_url, 'count': count}
-    try:
-        if is_website_collateral(long_url):
-            # Skip urls that cannot have HTML content
-            doc['exc'] = 'Website collateral'
-        elif count < CUTOFF:
-            doc['exc'] = "Too few hits"
-        else:
+    d = collection.find_one({'short_url': short_url})
+    if d:
+        print(d)
+        print("Already in database: {0}".format(short_url), file=stderr)
+    elif is_website_collateral(long_url):
+        # Skip urls that cannot have HTML content
+        doc['exc'] = 'Website collateral'
+    elif count < CUTOFF:
+        doc['exc'] = "Too few hits"
+    else:
+        try:
             # Record text scraped
             r = requests.get(long_url, timeout=12)
-            doc['text'] = r.text
-    except Exception as exc:
-        # Record exception if process was not successful
-        doc['exc'] = str(exc)
-
-    collection.insert(doc)
+        except Exception as exc:
+            # Record exception if process was not successful
+            doc['exc'] = str(exc)
+        else:
+            headers = r.headers
+            status_code = r.status_code
+            if status_code >= 400:
+                doc.update({'exc': "Bad status_code", 'status_code': status_code})
+            else:
+                content_type = headers.get('content-type')
+                if not content_type or ('text/html' not in content_type):
+                    doc.update({'exc': "Bad content type", 'content_type': content_type})
+                else:
+                    try:
+                        text = r.text
+                    except Exception as exc1:
+                        doc['exc'] = str(exc1)
+                    else:
+                        content_length = int(headers.get('content-length', len(text)))
+                        if content_length > 200 * 1000:
+                            doc.update({'exc': "Too long", 'content_length': content_length})
+                        else:
+                            doc['text'] = text
+    if not d:
+        collection.insert(doc)
     return short_url
 
 
 def longurls():
     print("Opening JSON", file=stderr)
-    with open("map-urls-json/aggregated.json") as f:
+    with open("map-urls-json/map-urls-aggregated.json") as f:
         print("Reading JSON", file=stderr)
         d = simplejson.loads(f.read())
         print("Yielding {0} short_url/long_url pairs".format(len(d)), file=stderr)
@@ -88,11 +111,13 @@ def longurls():
 
 
 def main():
-    print("Creating executor", file=stderr)
-    with concurrent.futures.ProcessPoolExecutor(max_workers=None) as executor:
-        print("Creating the futures to execute", file=stderr)
-        for data in executor.map(load_url, longurls()):
-            print(data['short_url'])
+    #print("Creating executor", file=stderr)
+    #with concurrent.futures.ProcessPoolExecutor(max_workers=None) as executor:
+    #    print("Creating the futures to execute", file=stderr)
+    #    for data in executor.map(load_url, longurls()):
+    #        print(data['short_url'])
+    for url in longurls():
+        load_url(url)
 
 
 if __name__ == '__main__':
