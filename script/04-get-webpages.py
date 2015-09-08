@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
-The fourth step in the project involved downloading content for each long url and
-storing in a database.
+The fourth step in the project involved downloading content for each long url
+and storing in a database.
 """
 from __future__ import print_function, absolute_import, division
 
@@ -28,6 +28,7 @@ collection = db.urls
 
 FIELDNAMES = ('short_url', 'count')
 
+
 def url_counts():
     """
     Extract the number of times a particular URL was hit in 72 hours
@@ -39,7 +40,7 @@ def url_counts():
         reader = DictReader(f, fieldnames=FIELDNAMES)
         return {
             row["short_url"]: int(row['count'])
-            for row in reader      
+            for row in reader
         }
 
 
@@ -57,7 +58,7 @@ def load_url(args):
     doc = {'short_url': short_url, 'long_url': long_url, 'count': count}
     try:
         if is_website_collateral(long_url):
-            # Skip urls that cannot have 
+            # Skip urls that cannot have HTML content
             doc['exc'] = 'Website collateral'
         elif count < CUTOFF:
             doc['exc'] = "Too few hits"
@@ -67,7 +68,7 @@ def load_url(args):
             doc['text'] = r.text
     except Exception as exc:
         # Record exception if process was not successful
-        doc['exc'] =str(exc)
+        doc['exc'] = str(exc)
 
     collection.insert(doc)
     return short_url
