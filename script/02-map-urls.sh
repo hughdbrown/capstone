@@ -11,3 +11,4 @@ for file in $( ls ../data-capstone/* ); do
     zcat < "${file}" | python "02-map-urls.py" > ${DST_DIR}/${jsonfile}
 done
 
+python "03-coalesce-json.py" > ${DST_DIR}/aggregated.json
