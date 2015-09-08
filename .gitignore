@@ -3,3 +3,6 @@ data-capstone/
 */.DS_Store
 *.py-e
 *.sh-e
+script/map-urls-json/*.log.json
+script/hits-csv/*.log.csv
+
