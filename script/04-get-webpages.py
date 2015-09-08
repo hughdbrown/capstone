@@ -20,7 +20,7 @@ import requests
 # 100k rank = 178 hits
 # 200k rank = 68 hits
 
-CUTOFF = 500
+CUTOFF = 150
 
 client = MongoClient()
 db = client.data
