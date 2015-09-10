@@ -1,0 +1,68 @@
+2015-09-09
+
+10:00 - 11:30
+- create AWS instance
+- create volume on AWS instance
+- change ~/.ssh/config to link to capstone
+- ssh into box
+- make capstone:~/data
+- make capstone:~/script
+- config machine for mongo
+- install pip, vim, htop (via epel-release)
+- scp requirements.txt
+- pip install -r requirements.txt
+- copy data on s3 to capstone:~/data
+- run capstone:script/04-create-database.py
+- mongorestore data
+
+- Start capstone:script/04-get-webdata.py
+
+11:30
+- identify url as not text/html but 144MB of streaming data
+    [ec2-user@ip-172-31-13-117 ~]$ curl -I http://bit.ly/1wFJEfX
+    HTTP/1.1 301 Moved Permanently
+    Server: nginx
+    Date: Wed, 09 Sep 2015 17:29:59 GMT
+    Content-Type: text/html; charset=utf-8
+    Content-Length: 162
+    Connection: keep-alive
+    Cache-Control: private, max-age=90
+    Location: http://vstreamcdn.com/key=dRJMVLYz7ag,end=141896169882953/mobile_374833.3gp
+
+11:45
+- download urls at 1500/minute
+    6.2 million urls at 1500 urls / minute:
+        6.2e6 / 1.5e3 = 4000 minutes = 65 hours
+--> run multiple instances
+
+12:22
+    > db.urls.count()
+    309377
+
+12:31
+    > db.urls.count()
+    378855
+
+14:50
+
+    > a = db.urls.count()
+    883345
+    > b = db.urls.count()
+    922018
+    > c = b - a
+    38673
+
+    > (6.2e6 - b) / (c / 2)
+    272.95436092364184
+
+Expected completion in 4.5 hours
+
+15:13
+
+    > a = db.urls.count()
+    1311903
+    > b = db.urls.count()
+    1346077
+    > (6.2e6 - b) / ((b - a) / 1.5)
+    213.05333001697196
+
