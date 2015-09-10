@@ -66,3 +66,7 @@ Expected completion in 4.5 hours
     > (6.2e6 - b) / ((b - a) / 1.5)
     213.05333001697196
 
+Code to copy to s3:
+    DBNAME=data
+    mongodump --db $DBNAME
+    s3cmd put -r dump s3://hughdbrown/data-capstone/data/
