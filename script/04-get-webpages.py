@@ -150,25 +150,23 @@ def load_url(args):
 
 
 def longurls():
-    print("Opening JSON", file=stderr)
-    with open("map-urls-json/map-urls-aggregated.json") as f:
-        print("Reading JSON", file=stderr)
-        d = simplejson.loads(f.read())
-        print("Yielding {0} short_url/long_url pairs".format(len(d)), file=stderr)
-        # python 2.7 code
-        for key, value in d.items():
-            yield key, value
-        # python 3.x code
-        # yield from d.items()
+    while True:
+        r = requests.get("http://localhost:5000/")
+        j = r.json()
+        if j:
+            yield j
+        else:
+            break
 
 
 def main():
-    #print("Creating executor", file=stderr)
-    #with concurrent.futures.ProcessPoolExecutor(max_workers=None) as executor:
-    #    print("Creating the futures to execute", file=stderr)
-    #    for data in executor.map(load_url, longurls()):
-    #        print(data['short_url'])
-    for url in longurls():
+    """
+    Main entry point
+    """
+    for d in longurls():
+        short_url = d['short_url']
+        long_url = d['long_url']
+        url = (short_url, long_url)
         load_url(url)
 
 
