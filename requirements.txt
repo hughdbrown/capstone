@@ -2,3 +2,4 @@ futures
 pymongo
 requests
 simplejson
+awscli
