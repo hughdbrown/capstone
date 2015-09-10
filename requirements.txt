@@ -3,3 +3,5 @@ pymongo
 requests
 simplejson
 awscli
+docopt
+
