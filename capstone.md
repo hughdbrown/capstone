@@ -56,7 +56,7 @@ story.
 2. **sklearn** python machine learning library
 3. **boto** python AWS library
 4. **flask** python web development library
-5. **bootstrap** javascript 
+5. **bootstrap** javascript
 6. **AWS/S3** All your data are belong to us
 
 

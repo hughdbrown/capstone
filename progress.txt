@@ -70,3 +70,53 @@ Code to copy to s3:
     DBNAME=data
     mongodump --db $DBNAME
     s3cmd put -r dump s3://hughdbrown/data-capstone/data/
+
+2015-09-08
+
+    # Any of germanwing, crash, or pilot
+    > db.urls.count({
+        long_url: { $regex: /.*germanwing.*/i}
+    });
+    11612
+
+    > db.urls.count({
+    ...     long_url: { $regex: /.*crash.*/i}
+    ... });
+    12715
+
+    > db.urls.count({
+    ...     long_url: { $regex: /.*pilot.*/i}
+    ... });
+    12744
+
+    # Any of germanwing, crash, or pilot
+    > db.urls.count({
+    ...     long_url: { $regex: /.*(germanwing|crash|pilot).*/i}
+    ... });
+    27737
+
+    # Any of germanwing, crash, or pilot but excluded by hit count
+    > db.urls.count({
+    ...      long_url: { $regex: /.*(germanwing|crash|pilot).*/i},
+    ...      "exc" : "Too few hits"
+    ... });
+    24388
+
+    # Any of germanwing, crash, or pilot in url and text
+    > db.urls.count({
+        long_url: { $regex: /.*(germanwing|crash|pilot).*/i},
+        "exc" : {$exists: false},
+        text: {$regex: /.*(germanwing|crash|pilot).*/i}
+    });
+    2145
+
+    # Any of germanwing, crash, or pilot in text
+    > db.urls.count({
+    ...     text: {$regex: /.*(germanwing|crash|pilot).*/i}
+    ... });
+    10277
+
+    db.urls.find({'long_url': { $regex: /german/i } }, {'text': 0});
+
+    db.urls.count({'long_url': { $regex: /german/i } });
+
