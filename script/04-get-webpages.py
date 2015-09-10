@@ -97,12 +97,14 @@ def is_website_collateral(long_url):
 
 
 def load_url(args):
+    """
+    Load a given short_url/long_url combination into Mongodb
+    """
     short_url, long_url = args
     count = URL_COUNTS[short_url]
     doc = {'short_url': short_url, 'long_url': long_url, 'count': count}
     d = collection.find_one({'short_url': short_url})
     if d:
-        print(d)
         print("Already in database: {0}".format(short_url), file=stderr)
     elif is_website_collateral(long_url):
         # Skip urls that cannot have HTML content
@@ -112,10 +114,13 @@ def load_url(args):
     else:
         try:
             # Record text scraped
+            print("> {0}".format(short_url), file=stderr)
             r = requests.get(long_url, timeout=12)
+            print("< {0}".format(short_url), file=stderr)
         except Exception as exc:
             # Record exception if process was not successful
             doc['exc'] = str(exc)
+            print("Exception: {0}".format(exc), file=stderr)
         else:
             headers = r.headers
             status_code = r.status_code
@@ -130,6 +135,7 @@ def load_url(args):
                         text = r.text
                     except Exception as exc1:
                         doc['exc'] = str(exc1)
+                        print("Exception: {0}".format(exc1), file=stderr)
                     else:
                         content_length = int(headers.get('content-length', len(text)))
                         if content_length > 200 * 1000:
@@ -137,7 +143,9 @@ def load_url(args):
                         else:
                             doc['text'] = text
     if not d:
-        collection.insert(doc)
+        print("> Inserting {0}".format(short_url), file=stderr)
+        collection.insert_one(doc)
+        print("< Inserting {0}".format(short_url), file=stderr)
     return short_url
 
 
