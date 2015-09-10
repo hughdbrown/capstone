@@ -59,7 +59,7 @@ def is_website_collateral(long_url):
         '.jpg', '.jpeg', '.png', '.gif',
         '.tif', '.tiff',
         '.jif', '.jfif',
-        '.jp2', '.jpx', '.j2k', '.j2c',	
+        '.jp2', '.jpx', '.j2k', '.j2c',
         '.fpx',
         '.pcd',
         '.pdf',
