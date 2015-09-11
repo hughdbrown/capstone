@@ -4,7 +4,11 @@ cd ~
 mkdir -p scripts
 mkdir -d data
 
-sudo yum install -y awscli tmux vim wget
+# Need epel-release to get htop
+wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+sudo rpm -ivh epel-release-7-5.noarch.rpm
+
+sudo yum install -y awscli tmux vim wget tree htop
 
 wget https://bootstrap.pypa.io/get-pip.py
 sudo python get-pip.py
