@@ -12,6 +12,19 @@ import simplejson
 
 # See schema.txt for explanation of columns
 COLUMNS = set(['a', 'c', 'ckw', 'cy', 'dp', 'g', 'h', 'kw', 'mc', 'nk', 'pp', 't', 'tz', 'u'])
+LOCATION_COLUMNS = set(['c', 'tz', 't', 'g'])
+COLUMN_REMAP = {
+    'a': 'browser',
+    'c': 'country',
+    'ckw': 'custom',
+    'cy': 'city',
+    'g': 'short_url',
+    'h': 'user',
+    'kw': 'keyword',
+    't': 'timestamp',
+    'tz': 'timezone',
+    'u': 'long_url',
+}
 
 
 def stdin_reader(f=stdin):
