@@ -44,7 +44,6 @@
     378855
 
 14:50
-
     > a = db.urls.count()
     883345
     > b = db.urls.count()
@@ -72,7 +71,6 @@ Code to copy to s3:
     s3cmd put -r dump s3://hughdbrown/data-capstone/data/
 
 2015-09-08
-
     # Any of germanwing, crash, or pilot
     > db.urls.count({
         long_url: { $regex: /.*germanwing.*/i}
@@ -80,26 +78,26 @@ Code to copy to s3:
     11612
 
     > db.urls.count({
-    ...     long_url: { $regex: /.*crash.*/i}
-    ... });
+        long_url: { $regex: /.*crash.*/i}
+    });
     12715
 
     > db.urls.count({
-    ...     long_url: { $regex: /.*pilot.*/i}
-    ... });
+        long_url: { $regex: /.*pilot.*/i}
+    });
     12744
 
     # Any of germanwing, crash, or pilot
     > db.urls.count({
-    ...     long_url: { $regex: /.*(germanwing|crash|pilot).*/i}
-    ... });
+        long_url: { $regex: /.*(germanwing|crash|pilot).*/i}
+    });
     27737
 
     # Any of germanwing, crash, or pilot but excluded by hit count
     > db.urls.count({
-    ...      long_url: { $regex: /.*(germanwing|crash|pilot).*/i},
-    ...      "exc" : "Too few hits"
-    ... });
+         long_url: { $regex: /.*(germanwing|crash|pilot).*/i},
+         "exc" : "Too few hits"
+    });
     24388
 
     # Any of germanwing, crash, or pilot in url and text
@@ -112,11 +110,113 @@ Code to copy to s3:
 
     # Any of germanwing, crash, or pilot in text
     > db.urls.count({
-    ...     text: {$regex: /.*(germanwing|crash|pilot).*/i}
-    ... });
+        text: {$regex: /.*(germanwing|crash|pilot).*/i}
+    });
     10277
 
     db.urls.find({'long_url': { $regex: /german/i } }, {'text': 0});
 
     db.urls.count({'long_url': { $regex: /german/i } });
+
+2015-09-09
+    11:00 slow start
+
+    12:00
+    * Refactored url-server.py
+    * Made 05-fix-germanwings.py to find stories about crash
+    * Generated JSON of urls of Germanwings hits
+
+    12:15
+    * Ran 05-get-data-german.py
+    db.urls.count({
+        long_url: { $regex: /.*(germanwing|plane.+crash|pilot).*/i},
+        "exc" : "Too few hits"
+    });
+
+    12:30
+    * Re-ran 05-get-data-german.py
+
+    15:30
+    * Too slow to run mongodb modifications on laptopn/in Galvanize: set up AWS instance
+    i2.xlarge
+    * Scripted setup
+    * Loaded germanwings data
+
+    * Asked Justin Abrahms about bootstrap templates:
+        I got my theme from wrapbootstrap. https://wrapbootstrap.com/theme/velocity-designed-for-products-WB0N38R04
+
+        The price depends on where you go. The same thing on themeforest was 3x the price.
+
+        The considerations I used were pretty simple. Was it inexpensive? Was it pretty? This one got checks on both. Bonus points were that there were multiple pages here that I could adapt into my SaaS application. The demo button on those themes is the majority of what you want to look at.
+
+        Prices depend. I've seen them from free to hundreds. You don't have to spend a lot to get a lot though.
+    * Will buy template, set up collateral for website
+
+    * EDA on mongodb data
+    - How many Germanwings urls do I have?
+
+    db.urls.count({
+        long_url: { $regex: /.*(germanwing|plane.+crash|pilot).*/i},
+        exc: {$exists: false}
+    });
+    15172
+
+    var regex = /.*(germanwing|plane.+crash|pilot).*/i;
+    db.urls.count({
+        $or: [{
+            text: { $regex: regex},
+            exc: {$exists: false}
+        }, {
+            long_url: { $regex: regex},
+        }]
+    });
+
+    db.urls.count({
+        text: { $regex: /.*(germanwing|plane.+crash|pilot).*/i},
+        exc: {$exists: false}
+    });
+
+    # Populate data.germanwings collection
+    var regex = /.*(germanwing|plane.+crash|pilot).*/i;
+    db.urls.find({
+        $or: [{
+            text: { $regex: regex},
+            exc: {$exists: false}
+        }, {
+            long_url: { $regex: regex},
+        }]
+    }).forEach(function(doc){
+       db.germanwings.insert(doc);
+    });
+
+    # There are better ways to do this:
+    # http://stackoverflow.com/questions/9711529/save-subset-of-mongodb-collection-to-another-collection
+    db.urls.aggregate([
+        { $match: {
+            $or: [{
+                text: { $regex: regex},
+                exc: {$exists: false}
+            }, {
+                long_url: { $regex: regex},
+            }]
+        } }, { $out: "germanwings" } ]);
+
+    15:50
+    Possible images for website
+        https://www.google.com/#q=site:flickr.com+germanwings
+        (search flickr.com for germanwings)
+
+    16:00
+    Clean up germanwings collection
+        > db.germanwings.remove({long_url: {$regex: /.*moviepilot.*/i}});
+        WriteResult({ "nRemoved" : 1801 })
+
+    db.germanwings.createIndex({'short_url': 1});
+
+    16:30
+    Extract short_urls to germanwings.pkl file, prepare to extract historical data
+
+    20:00
+    db.urlhist.createIndex({"timestamp": 1, "short_url": 1})
+    db.urlhist.createIndex({"short_url": 1, "timestamp": 1})
 
