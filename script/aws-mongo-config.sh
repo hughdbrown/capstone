@@ -38,7 +38,7 @@ sudo mkdir -p /data/{db,log,journal}
 sudo chown -R mongod:mongod /data
 
 # Modify .etc/mongod.conf with directories
-sudo rm /etc/mongod.conf
+sudo rm /etc/mongod.conf /etc/sysconfig/mongod
 echo '
 systemLog:
    destination: file
@@ -52,7 +52,7 @@ processManagement:
    fork: true
 net:
    bindIp: 127.0.0.1
-   port: 27017' | sudo tee -a /etc/mongod.conf
+   port: 27017' | sudo tee -a /etc/mongod.conf | sudo tee -a /etc/sysconfig/mongod
 
 # Specialized ulimit optimizations
 echo '* soft nofile 64000
