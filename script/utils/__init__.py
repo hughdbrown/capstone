@@ -49,7 +49,7 @@ def filter_files_by_ext(directory, ext):
 def coalesce_jsonfiles(srcdir, ext):
     """
     This is really a call to `reduce`:
-    
+
     dest = reduce(
         filter_files_by_ext("map-urls-json/", ".json"),
         lambda x, y: x.update(stdin_reader(y)),
