@@ -20,8 +20,8 @@ def main():
     regex = re.compile(r""".*(germanwing|plane.+crash|pilot).*""", re.IGNORECASE)
 
     query = {
-         "long_url": regex,
-         "exc" : "Too few hits",
+        "long_url": regex,
+        "exc": "Too few hits",
     }
     fields = {
         'short_url': 1,

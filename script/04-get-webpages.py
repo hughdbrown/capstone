@@ -51,7 +51,6 @@ def url_counts():
 URL_COUNTS = url_counts()
 
 
-
 def load_url(short_url, long_url, count=CUTOFF):
     """
     Load a given short_url/long_url combination into Mongodb

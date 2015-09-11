@@ -39,7 +39,6 @@ def load_germanwings():
     print("Loading {0}".format(filename), file=stderr)
     with open(filename, "rb") as f:
         germanwings = pickle.load(f)
-        assert type(germanwings) == set
         return germanwings
 
 
