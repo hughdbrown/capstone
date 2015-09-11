@@ -4,4 +4,4 @@ requests
 simplejson
 awscli
 docopt
-
+flask
