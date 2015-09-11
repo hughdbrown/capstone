@@ -220,3 +220,12 @@ Code to copy to s3:
     db.urlhist.createIndex({"timestamp": 1, "short_url": 1})
     db.urlhist.createIndex({"short_url": 1, "timestamp": 1})
 
+2015-09-11
+    12:15
+    * Update AWS scripts
+    * Update README.md
+
+    13:30
+    * Get MotionChart working: needed to serve HTML from python server, not from file:///
+    > python -m SimpleHTTPServer 8000
+    http://localhost:8000/a.html
