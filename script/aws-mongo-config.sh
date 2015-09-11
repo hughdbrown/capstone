@@ -70,5 +70,8 @@ echo 'ACTION=="add", KERNEL=="/dev/xvdb", ATTR{bdi/read_ahead_kb}="16"' | sudo t
 
 # Start mongodb
 sudo service mongod start
+# Sometimes mongod does not start up as a service. Not sure why.
+# Use this instead:
+#   sudo mongod --config /etc/config.conf
 
 mongorestore /capstone/dump
