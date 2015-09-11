@@ -42,6 +42,7 @@ def load_data(filename):
 def get_url():
     try:
         item = DATA.pop()
+        print("{0} remaining".format(len(DATA)))
         short_url, long_url = item
         d = {'short_url': short_url, 'long_url': long_url}
     except IndexError:
