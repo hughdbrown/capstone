@@ -229,3 +229,55 @@ Code to copy to s3:
     * Get MotionChart working: needed to serve HTML from python server, not from file:///
     > python -m SimpleHTTPServer 8000
     http://localhost:8000/a.html
+
+    16:30
+    Tried to get aggregation working from mongo javascript console:
+        db.urlhist.aggregate([
+            {$project: {
+                day: { $dayOfMonth: "$timestamp" },
+                hour: { $hour: "$timestamp" },
+                minutes: { $minute: "$timestamp" }
+            }},
+
+            {$group: {
+                _id: { day: "$day", hour: "$hour", minute: "$minute"},
+                count: { $sum: 1 }
+            }}
+        ])
+
+
+        db.urlhist.aggregate([
+            {$project: {
+                day: {$dayOfMonth: "$timestamp"},
+                hour: {$hour: "$timestamp"},
+                minute: {$minute: "$timestamp"},
+                country: "$country",
+                _id: 0
+            }},
+            /* Group by day, hour, minute, and country */
+            {$group: {
+                _id: {day: "$day", hour: "$hour", minute: "$minute", country: "$country"},
+                count: {$sum: 1}
+            }},
+            /* Limit to more then 100 hits per minute interval */
+            {$match: {
+                count: {$gte: 100}
+            }},
+            /* Sort works in an unexpected way */
+            {$sort: {
+                day: 1,
+                hour: 1,
+                minute: 1,
+                count: -1,
+                country: 1
+            }}
+        ]);
+
+
+        db.urlhist.createIndex({timestamp: 1, country: 1})
+    but ended up using pymongo and collections.Counter for aggregation
+
+2015-09-14
+    09:00
+        Motionchart in d3.js
+        http://bost.ocks.org/mike/nations/
