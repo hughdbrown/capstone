@@ -281,3 +281,13 @@ Code to copy to s3:
     09:00
         Motionchart in d3.js
         http://bost.ocks.org/mike/nations/
+
+2015-09-15
+    12:15
+    Help Sean Sall put his existing mongodb onto /dev/data:
+        sudo mkdir -p /dev/data
+        sudo chown -R mongodb:mongod /dev/data
+        sudo mv /var/lib/mongodb/* /dev/data/
+        # Modify /etc/mongod.conf so that 'dbpath' points to /dev/data:
+        #   dbpath = /dev/data
+        sudo service mongod start
