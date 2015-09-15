@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Germanwings views (2015-03-25 to 2015-03-27)</title>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="css/spa.css" type="text/css"/>
+    <link rel="stylesheet" href="css/nav.css" type="text/css"/>
+</head>
+
+<body>
+    <nav>
+        <form>
+            <fieldset>
+                <label for="chart">Chart:</label>
+                <select id="chart" name="chart">
+                    <option value="motion" selected>MotionChart</option>
+                </select>
+            </fieldset>
+        </form>
+    </nav>
+
+    <div id="container" />
+
+    <!-- Third party javascript -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js" charset="utf-8"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone.js" charset="utf-8"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.js" charset="utf-8"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+    <!-- Application javascript -->
+    <script type="text/javascript" src="script/jenkinsviewer.js"></script>
+    <script type="text/javascript" src="script/motion-chart-viewer.js"></script>
+    <script type="text/javascript" src="script/navviewer.js"></script>
+
+    <!-- Startup -->
+    <script>
+        var navview = new NavViewer();
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+nav {
+    width: 1200px;
+}
+
+nav, form, fieldset {
+    display: inline-block;
+	padding: 4px;
+}
+
+nav, fieldset {
+    border: 1px #af3333 solid;
+}
+
+fieldset {
+    height: 28px;
+}
+
+body {
+    margin: auto;
+    position: relative;
+    width: 1200px;
+    height: 800px;
+}
