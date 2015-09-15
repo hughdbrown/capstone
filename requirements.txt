@@ -5,3 +5,4 @@ simplejson
 awscli
 docopt
 flask
+six

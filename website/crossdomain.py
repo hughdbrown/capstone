@@ -4,8 +4,10 @@ http://flask.pocoo.org/snippets/56/
 """
 
 from datetime import timedelta
-from flask import make_response, request, current_app
 from functools import update_wrapper
+
+from flask import make_response, request, current_app
+from six import string_types
 
 
 def crossdomain(origin=None, methods=None, headers=None,
@@ -16,9 +18,9 @@ def crossdomain(origin=None, methods=None, headers=None,
     """
     if methods is not None:
         methods = ', '.join(sorted(x.upper() for x in methods))
-    if headers is not None and not isinstance(headers, basestring):
+    if headers is not None and not isinstance(headers, string_types):
         headers = ', '.join(x.upper() for x in headers)
-    if not isinstance(origin, basestring):
+    if not isinstance(origin, string_types):
         origin = ', '.join(origin)
     if isinstance(max_age, timedelta):
         max_age = max_age.total_seconds()
