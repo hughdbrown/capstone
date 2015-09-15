@@ -12,13 +12,11 @@ from __future__ import absolute_import, print_function
 
 from flask import Flask, send_from_directory
 from docopt import docopt
-
-
-app = Flask(__name__, static_url_path='')
-
 import simplejson
 
 from crossdomain import crossdomain
+
+app = Flask(__name__, static_url_path='')
 
 
 @app.route('/timestamp', methods=['GET'])
