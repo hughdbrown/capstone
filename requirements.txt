@@ -6,3 +6,5 @@ awscli
 docopt
 flask
 six
+wordcloud
+
