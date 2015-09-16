@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+"""
+Insert into urlhist collection in mongodb
+"""
 from __future__ import print_function, absolute_import, division
 
 from sys import stderr

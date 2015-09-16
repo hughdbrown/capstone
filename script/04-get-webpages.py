@@ -6,9 +6,7 @@ and storing in a database.
 from __future__ import print_function, absolute_import, division
 
 from sys import stderr
-import concurrent.futures
 from csv import DictReader
-import random
 
 import simplejson
 from pymongo import MongoClient

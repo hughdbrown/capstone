@@ -1,10 +1,15 @@
 #!/usr/bin/env python
+"""
+Scan a bit.ly data file and filter by the short_urls found in the germanwings.pkl file,
+i.e.: create the data for a germanwings-hist JSON file using CSV files.
+"""
 from __future__ import print_function, absolute_import, division
 
 from sys import stderr
-import simplejson
 from datetime import datetime
 import pickle
+
+import simplejson
 
 from utils import LOCATION_COLUMNS, COLUMN_REMAP, stdin_reader
 

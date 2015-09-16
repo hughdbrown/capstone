@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-
+"""
+Find the short_urls that have `pilot` in the domain.
+List will be used later to clean up germanwings collectioN in mongodb.
+"""
 from __future__ import absolute_import, print_function
 
 from sys import stderr

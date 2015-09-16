@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 Script to initialize a mongo database (named 'data') and collection (named 'urls')
 via pymongo

@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+"""
+Create a set of the unique short_urls from the germanwings collection.
+Store the result in pickle file.
+"""
 from __future__ import absolute_import, print_function
 
 import pickle
