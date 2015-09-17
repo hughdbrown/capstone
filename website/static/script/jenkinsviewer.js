@@ -1,22 +1,11 @@
 var JenkinsViewer = Backbone.View.extend({
     el: '#container',
-    // server: "http://dmc358.mc.wgenhq.net:5000",
     server: "http://localhost:8000",
     url_fragment: function() {
-        /***
-        var _period = $('#period').val();
-        var _team = $('#team').val();
-        var _status = $('#status').val();
-        return "when=" + _period +
-            (_team === "all" ? "" : ("&" + "team=" + _team)) +
-            (_status === "" ? "" : ("&" + "status=" + _status));
-        ***/
-        return "timestamp";
+        var data = $('#data').val();
+        return data;
     },
     build_url: function() {
-        /***
-        return this.base_url + "?" + this.url_fragment();
-        ***/
         return this.base_url + "/" + this.url_fragment();
     },
     initialize: function () {

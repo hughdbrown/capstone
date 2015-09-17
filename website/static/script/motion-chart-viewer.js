@@ -3,7 +3,7 @@ var MotionChartViewer = JenkinsViewer.extend({
         JenkinsViewer.prototype.initialize.call(this);
 
         console.log("Initializing MotionChart");
-        this.base_url = this.server;
+        this.base_url = this.server + "/data";
         this.chart = null;
         this.container = $(this.el)[0];
     },
@@ -17,29 +17,31 @@ var MotionChartViewer = JenkinsViewer.extend({
 
         function drawVisualization() {
             console.log("drawVisualization " + url);
-            $.getJSON(url)
-            .done(function (data) {
-                /* Coerce to Date */
-                var mapped_data = _.map(data, function(row){
+
+            $.getJSON(url).done(function (data) {
+                console.log("1");
+                var mapped_data = _.map(data, function(data){
                     /*
-                    {"count": 7147, "minute": 9, "day": 27, "hour": 8, "country": "US"}
+                    {"count": 5256, "minute": 7, "day": 27, "key": "United States of America", "hour": 22}
                     */
                     //var date = new Date(2015, 2, row.day, row.hour, row.minute);
-                    var date = new Date(2015, 2, (row.day - 25) * 240 + (row.hour * 10) + row.minute, 0, 0); // row.hour, row.minute);
-                    return [row.country, date, row.count];
+                    try {
+                        var day = data.day, hour = data.hour, minute = data.minute;
+                        var date = new Date(2015, 2, (day - 25) * 240 + (hour * 10) + minute, 0, 0);
+                        return [data.key, date, data.count];
+                    }
+                    catch(err){
+                        console.log(err);
+                    }
                 });
                 console.log("Mapped items: " + mapped_data.length);
 
                 console.log("Creating datatable");
                 var data_table = new google.visualization.DataTable();
-                data_table.addColumn('string', 'Country');
+                data_table.addColumn('string', 'Key');
                 data_table.addColumn('date', 'Date');
                 data_table.addColumn('number', 'Count');
-                var filtered = _.filter(mapped_data, function(row){
-                    return row[0] == 'US' || row[0] == 'DE' || row[0] == 'IT' || row[0] == 'ES';
-                });
-                // data_table.addRows(mapped_data);
-                data_table.addRows(filtered);
+                data_table.addRows(mapped_data);
 
                 console.log("Creating MotionChart");
                 that.chart = new google.visualization.MotionChart(container);
