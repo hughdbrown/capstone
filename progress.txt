@@ -291,3 +291,17 @@ Code to copy to s3:
         # Modify /etc/mongod.conf so that 'dbpath' points to /dev/data:
         #   dbpath = /dev/data
         sudo service mongod start
+
+    12:30
+    Todo
+        S3 data
+        * pull s3 data on 
+        Germanwings stories
+        * extract stories from mongodb to files
+        * clean HTML of stories
+        * select stories
+        ** for all 
+        Topic modeling
+        *
+        WordCloud
+        * pull 
