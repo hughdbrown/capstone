@@ -105,3 +105,17 @@ The data I worked with was exclusively decodes.
 
 ## Topic modeling
 
+
+
+
+Graphics
+* world traffic vs. germanwings traffic
+* US-IT-ES-DE traffic
+* US-CA traffic
+
+Topic modeling
+* US topics by hour
+    
+* IT topics by hour
+* DE topics by hour
+* ES topics by hour
