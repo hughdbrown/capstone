@@ -30,7 +30,7 @@ COLUMN_REMAP = {
 def stdin_reader(f=stdin):
     """
     Read JSON objects from file, one per line.
-    Yield loaded diciotnaries
+    Yield loaded dictionaries
     """
     loader = simplejson.loads
     for line in f:
