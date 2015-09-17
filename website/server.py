@@ -10,13 +10,13 @@ Options:
 """
 from __future__ import absolute_import, print_function
 
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, render_template
 from docopt import docopt
 import simplejson
 
 from crossdomain import crossdomain
 
-app = Flask(__name__, static_url_path='')
+app = Flask(__name__)
 
 
 @app.route('/data/<filename>', methods=['GET'])
@@ -27,7 +27,7 @@ def retrieve_data(filename):
     """
     try:
         print("Getting {0}".format(filename))
-        return send_from_directory("static", filename, mimetype="application/json")
+        return send_from_directory(app.static_folder, filename, mimetype="application/json")
     except Exception as exc:
         print(str(exc))
         # logging.exception(exc, log_type=__name__)
@@ -36,8 +36,7 @@ def retrieve_data(filename):
 
 @app.route('/')
 def html():
-    filename = "jenkins_analytics.html"
-    return send_from_directory("static", filename)
+    return render_template("jenkins_analytics.html")
 
 
 def main():

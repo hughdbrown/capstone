@@ -5,8 +5,8 @@
     <title>Germanwings views (2015-03-25 to 2015-03-27)</title>
 
     <!-- stylesheets -->
-    <link rel="stylesheet" href="css/spa.css" type="text/css"/>
-    <link rel="stylesheet" href="css/nav.css" type="text/css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/spa.css') }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}" type="text/css"/>
 </head>
 
 <body>
@@ -41,9 +41,9 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
     <!-- Application javascript -->
-    <script type="text/javascript" src="script/jenkinsviewer.js"></script>
-    <script type="text/javascript" src="script/motion-chart-viewer.js"></script>
-    <script type="text/javascript" src="script/navviewer.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='script/jenkinsviewer.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='script/motion-chart-viewer.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='script/navviewer.js') }}"></script>
 
     <!-- Startup -->
     <script>
