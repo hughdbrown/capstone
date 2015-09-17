@@ -15,6 +15,8 @@ var MotionChartViewer = JenkinsViewer.extend({
         var url = this.build_url();
         var that = this;
 
+        that.called = false;
+        console.log("MotionCharViewer.load");
         function drawVisualization() {
             console.log("drawVisualization " + url);
 
@@ -56,12 +58,16 @@ var MotionChartViewer = JenkinsViewer.extend({
                     height: height
                 };
                 that.chart.draw(data_table, options);
-                console.log("Done");
             });
+            that.called = true;
         }
 
         google.load("visualization", "1", {packages:["motionchart"]});
         google.setOnLoadCallback(drawVisualization);
+        if (! that.called){
+            drawVisualization();
+            that.called = false;
+        }
     },
 
     unload: function() {

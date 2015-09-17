@@ -2,10 +2,13 @@ var NavViewer = Backbone.View.extend({
     el: 'nav',
 
     events: {
+        /***
         "change #chart": "change_chart",
         "change #period": "change_period",
         "change #team": "change_team",
         "change #status": "change_status"
+        ***/
+        "change #data": "change_data"
     },
 
     initialize: function() {
@@ -30,6 +33,7 @@ var NavViewer = Backbone.View.extend({
         this.active_view.load();
     },
 
+    /***
     change_chart: function(e) {
         var new_chart_name = $('#chart').val();
         this.load_chart(new_chart_name);
@@ -47,6 +51,12 @@ var NavViewer = Backbone.View.extend({
     change_status: function(e) {
         var _status = $('#status').val();
         console.log("NavViewer.change_status to " + _status);
+        this.active_view.load();
+    }
+    ***/
+    change_data: function(e) {
+        var _data = $('#data').val();
+        console.log("NavViewer.change_data to " + _data);
         this.active_view.load();
     }
 });
