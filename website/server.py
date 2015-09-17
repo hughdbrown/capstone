@@ -19,15 +19,14 @@ from crossdomain import crossdomain
 app = Flask(__name__, static_url_path='')
 
 
-@app.route('/timestamp', methods=['GET'])
+@app.route('/data/<filename>', methods=['GET'])
 @crossdomain(origin='*')
-def timestamp_data():
+def retrieve_data(filename):
     """
-    Respond to Flask request for /timestamp
+    Respond to Flask request for /data
     """
-    # filename = "urlhist-timestamp.json"
-    filename = "urlhist-timestamp-country.json"
     try:
+        print("Getting {0}".format(filename))
         return send_from_directory("static", filename, mimetype="application/json")
     except Exception as exc:
         print(str(exc))
