@@ -15,7 +15,7 @@ enabled=1" | sudo tee -a /etc/yum.repos.d/mongodb.repo
 # Install mongodb
 sudo yum install -y mongodb-org-server mongodb-org-shell mongodb-org-tools
 
-# Make directoires
+# Make directories
 sudo mkdir /data
 sudo mkdir /capstone
 
