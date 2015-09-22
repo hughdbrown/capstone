@@ -26,7 +26,6 @@ def retrieve_data(filename):
     Respond to Flask request for /data
     """
     try:
-        print("Getting {0}".format(filename))
         return send_from_directory(app.static_folder, filename, mimetype="application/json")
     except Exception as exc:
         print(str(exc))
