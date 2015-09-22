@@ -1,3 +1,5 @@
+from __future__ import print_function, absolute_import
+
 import re
 import os
 import os.path
@@ -21,7 +23,7 @@ def clean(data):
     data = SCRIPT.sub("", data)
     data = STYLE.sub("", data)
     return data
-    
+
 
 def main():
     for filename in os.listdir("raw"):
@@ -37,6 +39,7 @@ def main():
                 print("{0}: {1}".format(filename, before - after))
             with open(cleanfile, "w") as f:
                 f.write(data)
+
 
 if __name__ == '__main__':
     main()
