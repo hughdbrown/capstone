@@ -1,0 +1,20 @@
+Graphs
+
+1. hits by country on topics
+topic-country-day-hits drop country
+
+2. hits on each topic over time
+topic-country-day-hits drop country
+
+
+df1 = doc-topic
+df2 = day-country-doc-hits
+merge on doc --> topic-country-day-hits
+
+
+
+samples are documents
+components are topics
+features are words
+
+

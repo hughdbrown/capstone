@@ -1,0 +1,49 @@
+24 Mar 2015 Germanwings flight 9525 crashed in the French Alps, killing all 150 aboard.
+Global interest in the story was high from the start but the progress of the story (with the gradual revelation
+of the copilot's suicide) captured the world's interest over several days. Breaking news on the story caused
+spikes in internet traffic over this period.
+
+    .... [graph of traffic by timezone from bit.ly]
+
+Examination of the global interest cannot be captured from a single website. Instead, data from bit.ly's url
+shortening service serves as a proxy for the global activity.
+
+This presentation covers the internet story, as revealed by topic modeling on bit.ly decode data.
+
+First, the data:
+- bit.ly provided me with short url decodes of the first 10 minutes of each of 72 hours
+- each of the 9187392 JSON documents represents a single hit of a bit.ly shortened url
+- 15 000 pages represented documents found to have relevance to the Germanwings story
+- document content was extracted by screen scraping
+        
+Here are the topics present in the 15 000 Germanwings documents, according to non-negative matrix factorization:
+
+    .... [slide of topics]
+
+But countries' interest in the story was not represented by equal interest in the topics.
+Here are how countries' interest as represented in each topic:
+
+    .... [slide of topic versus country]
+
+But in addition, interest in the topics changed over time, as we would expect with a story in which details emerged gradually:
+
+    .... [slide of topic versus time]
+
+Technical notes
+
+NMF + wordclouds 
+Ordinarily, topic modeling weights words by the frequency of word occurrence in a document, assuming that all documents have equal importance.
+Documents in my model were weighted according to their number of hits for that document, to reflect their varying importance.
+
+Tools
+- pandas/numpy
+- mongodb/AWS
+
+-----
+
+Complications
+- cleaning data of HTML artifacts
+    - so many different layouts means inability to scrape uniformly
+- different languages
+- documents that do not accurately describe their content (i.e. streaming video)
+- pages that retired content over 6 month period
