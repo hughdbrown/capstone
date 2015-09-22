@@ -57,6 +57,7 @@ var NavViewer = Backbone.View.extend({
     change_data: function(e) {
         var _data = $('#data').val();
         console.log("NavViewer.change_data to " + _data);
+        this.active_view.unload();
         this.active_view.load();
     }
 });

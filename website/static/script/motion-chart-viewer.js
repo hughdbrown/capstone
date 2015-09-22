@@ -21,7 +21,6 @@ var MotionChartViewer = JenkinsViewer.extend({
             console.log("drawVisualization " + url);
 
             $.getJSON(url).done(function (data) {
-                console.log("1");
                 var mapped_data = _.map(data, function(data){
                     /*
                     {"count": 5256, "minute": 7, "day": 27, "key": "United States of America", "hour": 22}
