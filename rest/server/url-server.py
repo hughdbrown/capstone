@@ -11,7 +11,7 @@ Options:
 """
 from __future__ import print_function, absolute_import
 from sys import stderr
-import random
+import Queue
 
 import simplejson
 
@@ -20,7 +20,7 @@ from docopt import docopt
 from flask import Flask, jsonify
 app = Flask(__name__)
 
-DATA = None
+DATA = Queue.Queue()
 
 
 def load_data(filename):
@@ -33,19 +33,18 @@ def load_data(filename):
         d = simplejson.loads(filedata)
         filedata = None
         print("Shuffling {0} short_url/long_url pairs".format(len(d)), file=stderr)
-        DATA = list(d.items())
+        for item in d.items():
+            DATA.put(item)
         d = None
-        random.shuffle(DATA)
 
 
 @app.route('/')
 def get_url():
     try:
-        item = DATA.pop()
-        print("{0} remaining".format(len(DATA)))
-        short_url, long_url = item
+        short_url, long_url = DATA.get(block=False)
+        print("{0} remaining".format(DATA.qsize()))
         d = {'short_url': short_url, 'long_url': long_url}
-    except IndexError:
+    except Queue.Empty:
         d = {}
     return jsonify(d)
 
