@@ -44,23 +44,26 @@ LANGUAGES = [
 
 # Pay no attention to the man behind the curtain
 CSS_STOP_WORDS = [
-    'html', 'head', 'body', 'div', 'li', 'span', 'script', 'ie', 'endif', 'image',
-    'amp', 'href', 'com', 'ie8', 'css', 'ico', 'img', 'id', 'http', 'var', 'alt', 'www',
-    'lte', 'lt',
+    'html', 'head', 'body', 'div', 'li', 'span', 'script', 'image',
+    'amp', 'href', 'com', 'ie8', 'css', 'ico', 'img', 'id',
+    'http', 'www',
+    'var', 'alt',
+    'lte', 'lt', 'ie', 'endif', 'iemobile',
     'caption', 'imageposition', 'php',
     'banner', 'tr', 'td', 'icon', 'jpg', 'px', 'font', 'class', 'sub', 'nav',
     'block', 'coltype', 'droplayer', '_blank', 'target',
     'md', 'mt', 'bd', 'link', 'stylesheet', 'quot', 'menu', 'ul', 'li', 'rel',
-    'iemobile', 'width', 'height', 'clear', 'empty', 'url', 
-    'caption', 'content', 'co', 'code', 'dropdown', 'src', 'png', 'title', 'meta',
+    'width', 'height', 'clear', 'empty', 'url',
+    'caption', 'content', 'code', 'dropdown', 'src', 'png', 'title', 'meta',
     'whatsapp', 'hide', 'close', 'focus', 'tag', 'iphone', 'javascript', 'links',
     'ms', 'mg', 'inner', 'lst', 'hd', 'widget', 'twitter', 'facebook', 't', 'tumblr',
-    'button', 'login', 'linkedin', 'pinterest', "instagram",
+    'button', 'login',
+    'linkedin', 'pinterest', "instagram", 'apple',
     "center", "false", "strong", "images", "mr", "contact", "home", "start",
-    "ft", "fr", "uk",
+    "ft", "fr", "uk", "us", "co",
     "applelayer", "cookies",
-    "rss", "verfsion", "text", "post", "ab", "container",
-    "header",
+    "rss", "version", "text", "post", "ab", "container",
+    "header", "ii",
 ]
 
 
