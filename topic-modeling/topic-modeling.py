@@ -29,16 +29,14 @@ from sklearn.decomposition import NMF
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+from wordcloud import WordCloud
+
+# Application imports
+from script.utils.clean_data import visible_text, clean, SCRIPT, STYLE, LINK, CONDITIONAL, HEAD
+
 # Work around problems with seaborn factorplot graphs on the Mac.
 # https://github.com/mwaskom/seaborn/issues/494
 sns.plt.switch_backend('TkAgg')
-
-
-from wordcloud import WordCloud
-
-
-from script.utils.clean_data import visible_text, clean, SCRIPT, STYLE, LINK, CONDITIONAL, HEAD
-
 
 CLEAN_DIR = "topic-modeling/clean"
 RAW_DIR = "topic-modeling/raw"
