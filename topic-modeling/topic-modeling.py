@@ -324,7 +324,7 @@ def topic_modeling2():
 
     print("Saving topics", file=stderr)
     topic_words = calculate_topic_words(nmf, feature_names, n_top_words)
-    for i, topic in enumerate(topic_words, start=1):
+    for i, topic in enumerate(topic_words):
         save_topic2(topic, i)
 
     with open("doc_topic.pkl", "wb") as f1:
@@ -397,7 +397,7 @@ def topic_modeling3():
 
     shared_params = {
         'size': 2.5,
-        'aspect': 1.875,
+        'aspect': 2.4,
         'kind': "bar",
         'palette': "muted",
         'legend_out': True,
