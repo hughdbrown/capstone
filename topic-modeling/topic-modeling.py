@@ -29,6 +29,11 @@ from sklearn.decomposition import NMF
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+# Work around problems with seaborn factorplot graphs on the Mac.
+# https://github.com/mwaskom/seaborn/issues/494
+sns.plt.switch_backend('TkAgg')
+
+
 from wordcloud import WordCloud
 
 
@@ -397,9 +402,6 @@ def topic_modeling3():
         'palette': "muted",
         'legend_out': True,
     }
-
-    # https://github.com/mwaskom/seaborn/issues/494
-    sns.plt.switch_backend('TkAgg')
 
     print("Columns in topic_hits_by_country: {0}".format(topic_hits_by_country.columns))
     plot_by_country = sns.factorplot(x="country", y="count", hue="topic", data=topic_hits_by_country, **shared_params)
