@@ -246,7 +246,7 @@ def save_topic(topic, mapping, serial):
 
 
 def save_topic2(topic, serial):
-    wc = WordCloud(background_color='white', width=800, height=1800)
+    wc = WordCloud(background_color='white', width=3200, height=1800)
     wc.generate_from_frequencies(topic.items())
     plt.figure(figsize=(9, 6))
     title = "Topic {0}".format(serial)
@@ -395,7 +395,7 @@ def topic_modeling3():
 
     shared_params = {
         'size': 2.5,
-        'aspect': 2.4,
+        'aspect': 3.0,
         'kind': "bar",
         'palette': "muted",
         'legend_out': True,
