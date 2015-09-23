@@ -6,3 +6,5 @@ data-capstone/
 script/map-urls-json/*.log.json
 script/hits-csv/*.log.csv
 
+script/.ipynb_checkpoints/
+*.key
