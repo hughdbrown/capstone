@@ -2,6 +2,7 @@
 from __future__ import print_function, absolute_import
 
 # Standard library
+import pickle
 import os
 import os.path
 from sys import stderr, exit
@@ -11,6 +12,7 @@ from datetime import datetime
 
 # 3rd party libraries
 import simplejson
+
 import pandas as pd
 from pandas import DataFrame, Series
 import numpy as np
@@ -25,6 +27,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import NMF
 
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 from wordcloud import WordCloud
 
@@ -35,6 +38,19 @@ from script.utils.clean_data import visible_text, clean, SCRIPT, STYLE, LINK, CO
 CLEAN_DIR = "topic-modeling/clean"
 RAW_DIR = "topic-modeling/raw"
 SHORT_URL_COUNT = "data/short_url_count"
+
+TITLE_FROM_MAPPING = re.compile(r"""
+    ^short_url_count.*
+    \-
+    (?P<country>[A-Z]{2})
+    \-
+    (?P<year>\d{4})
+    \-
+    (?P<month>\d{2})
+    \-
+    (?P<day>\d{2})
+    \.json
+""", re.VERBOSE)
 
 NUMBER = re.compile(r'''\d+''')
 LANGUAGES = [
@@ -204,19 +220,7 @@ def calculate_topic_words(nmf, feature_names, n_top_words):
 
 
 def title_from_mapping(mapping):
-    r = re.compile(r"""
-        ^short_url_count.*
-        \-
-        (?P<country>[A-Z]{2})
-        \-
-        (?P<year>\d{4})
-        \-
-        (?P<month>\d{2})
-        \-
-        (?P<day>\d{2})
-        \.json
-    """, re.VERBOSE)
-    g = r.match(mapping).groupdict()
+    g = TITLE_FROM_MAPPING.match(mapping).groupdict()
     return g["country"], int(g["year"]), int(g["month"]), int(g["day"])
 
 
@@ -280,6 +284,13 @@ def read_all_hits():
     return df
 
 
+def save_country_topics(doc_topic_df, country_df):
+    df = doc_topic_df.merge(country_df, left_index=True, right_index=True)
+    x = df.groupby(["topic", "country"])["count"].sum()
+    y = DataFrame(x.reset_index())
+
+
+
 def topic_modeling2():
     n_topics, n_top_words = 15, 32
 
@@ -305,16 +316,106 @@ def topic_modeling2():
     nmf, doc_topic = calculate_topics(features, n_topics)
     print("doc_topic: {0}".format(doc_topic.shape))
 
+    print("Saving topics", file=stderr)
     topic_words = calculate_topic_words(nmf, feature_names, n_top_words)
     for i, topic in enumerate(topic_words, start=1):
         save_topic2(topic, i)
+
+    with open("doc_topic.pkl", "wb") as f1:
+        pickle.dump(doc_topic, f1)
+    with open("topic_words.pkl", "wb") as f2:
+        pickle.dump(topic_words, f2)
+    with open("feature_names.pkl", "wb") as f3:
+        pickle.dump(feature_names, f3)
+    with open("features.pkl", "wb") as f4:
+        pickle.dump(features, f4)
+
+
+def topic_modeling3():
+    print("Reading all the GermanWings documents into memory", file=stderr)
+    df = read_all_documents()
+
+    print("Unpickling variables")
+    with open("doc_topic.pkl", "rb") as f1:
+        doc_topic = pickle.load(f1)
+    with open("topic_words.pkl", "rb") as f2:
+        topic_words = pickle.load(f2)
+    with open("feature_names.pkl", "rb") as f3:
+        feature_names = pickle.load(f3)
+    with open("features.pkl", "rb") as f4:
+        features = pickle.load(f4)
+
+    # Create dataframe with short_url to topic mapping
+    doc_topic_df = pd.DataFrame({'short_url': df.short_url, 'topic': doc_topic.argmax(1)})
+    doc_topic_df.set_index("short_url", inplace=True)
+
+    def build_country_day_df():
+        for i, mapping in enumerate(os.listdir(SHORT_URL_COUNT)):
+            fullpath = os.path.join(SHORT_URL_COUNT, mapping)
+            print("Loading {0}: {1}".format(i, fullpath), file=stderr)
+            country, _, _, day = title_from_mapping(mapping)
+            with open(fullpath) as f:
+                d = simplejson.loads(f.read())
+                urls_with_count = DataFrame(d)
+                urls_with_count['day'] = day
+                urls_with_count['country'] = country
+                urls_with_count.set_index(["short_url"], inplace=True)
+                yield urls_with_count
+
+    print("Creating doc-country-day-hit DataFrame", file=stderr)
+    country_day_df = pd.concat(build_country_day_df())
+    country_day_df.reset_index(inplace=True)
+
+    print("Creating doc-day-hit DataFrame", file=stderr)
+    a = country_day_df.groupby(['short_url', 'day'])['count'].sum().reset_index()
+    day_df = DataFrame(a).set_index("short_url")
+    print("day_df: {0}".format(day_df.head()))
+    assert "country" not in day_df.columns
+
+    print("Creating doc-country-hit DataFrame", file=stderr)
+    a = country_day_df.groupby(['short_url', 'country'])['count'].sum().reset_index()
+    country_df = DataFrame(a).set_index("short_url")
+    print("country_df: {0}".format(country_df.head()))
+    assert "day" not in country_df.columns
+
+    print("Merging country topics", file=stderr)
+    country_topics = doc_topic_df.merge(country_df, left_index=True, right_index=True)
+    print("country_topics: {0}".format(country_topics.head()))
+
+    print("Merging day topics", file=stderr)
+    day_topics = doc_topic_df.merge(day_df, left_index=True, right_index=True)
+    print("day_topics: {0}".format(day_topics.head()))
+
+    topic_hits_by_country = country_topics.groupby(['country', 'topic'])["count"].sum().reset_index()
+    topic_hits_by_day = day_topics.groupby(['day', 'topic'])["count"].sum().reset_index()
+
+    shared_params = {
+        'size': 2.5,
+        'aspect': 1.875,
+        'kind': "bar",
+        'palette': "muted",
+        'legend_out': True,
+    }
+
+    # https://github.com/mwaskom/seaborn/issues/494
+    sns.plt.switch_backend('TkAgg')
+
+    print("Columns in topic_hits_by_country: {0}".format(topic_hits_by_country.columns))
+    plot_by_country = sns.factorplot(x="country", y="count", hue="topic", data=topic_hits_by_country, **shared_params)
+
+    print("Columns in topic_hits_by_day.columns: {0}".format(topic_hits_by_day.columns))
+    plot_by_date = sns.factorplot(x="day", y="count", hue="topic", data=topic_hits_by_day, **shared_params)
+
+    plot_by_country.savefig('hits_by_country.png')
+    plot_by_date.savefig('hits_by_date.png')
 
 
 def main():
     # extract_documents()
     # clean_documents()
     # topic_modeling()
-    topic_modeling2()
+    # topic_modeling2()
+    topic_modeling3()
 
 
 if __name__ == '__main__':
