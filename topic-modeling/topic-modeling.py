@@ -292,7 +292,6 @@ def save_country_topics(doc_topic_df, country_df):
     y = DataFrame(x.reset_index())
 
 
-
 def topic_modeling2():
     n_topics, n_top_words = 15, 32
 
