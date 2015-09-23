@@ -79,7 +79,9 @@ CSS_STOP_WORDS = [
     "ft", "fr", "uk", "us", "co",
     "applelayer", "cookies",
     "rss", "version", "text", "post", "ab", "container",
-    "header", "ii",
+    "footer", "header", "ii", "ke", "ca", "fa",
+    "right", "left",
+    "form", "border",
 ]
 
 
