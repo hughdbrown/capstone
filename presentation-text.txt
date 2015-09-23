@@ -1,4 +1,4 @@
-24 Mar 2015 Germanwings flight 9525 crashed in the French Alps, killing all 150 aboard.
+On 24 Mar 2015 Germanwings flight 9525 crashed in the French Alps, killing all 150 aboard.
 Global interest in the story was high from the start but the progress of the story (with the gradual revelation
 of the copilot's suicide) captured the world's interest over several days. Breaking news on the story caused
 spikes in internet traffic over this period.
@@ -12,8 +12,7 @@ This presentation covers the internet story, as revealed by topic modeling on bi
 
 First, the data:
 - bit.ly provided me with short url decodes of the first 10 minutes of each of 72 hours
-- each of the 9187392 JSON documents represents a single hit of a bit.ly shortened url
-- 15 000 pages represented documents found to have relevance to the Germanwings story
+- 15 000 pages referenced by 9 million urls were found to have relevance to the Germanwings story
 - document content was extracted by screen scraping
         
 Technical notes
@@ -22,23 +21,21 @@ NMF + wordclouds
 Ordinarily, topic modeling weights words by the frequency of word occurrence in a document, assuming that all documents have equal importance.
 Documents in my model were weighted according to their number of hits for that document, to reflect their varying importance.
 
-Here are the topics present in the 15 000 Germanwings documents, according to non-negative matrix factorization:
-
-    .... [slide of topics]
-
-But countries' interest in the story was not represented by equal interest in the topics.
-Here are how countries' interest as represented in each topic:
+Interestingly, countries' interest in the latent topics was not uniform.
+Here are countries' interest as represented in each topic:
 
     .... [slide of topic versus country]
+
+Here is the top German story, revealing interest in relatives, family, and victims.
+
+Here is the main US topic which shows more focus on the mental illness of the co-pilot.
 
 But in addition, interest in the topics changed over time, as we would expect with a story in which details emerged gradually:
 
     .... [slide of topic versus time]
 
-
-Tools
-- pandas/numpy
-- mongodb/AWS
+Topics that had low interest on the 25th shot up on the 26th as investigators uncovered the truth about the crash. In addition, focus shifted
+from the 25th to the 26th, some topics gaining and others losing in importance.
 
 -----
 
