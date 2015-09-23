@@ -16,6 +16,12 @@ First, the data:
 - 15 000 pages represented documents found to have relevance to the Germanwings story
 - document content was extracted by screen scraping
         
+Technical notes
+
+NMF + wordclouds
+Ordinarily, topic modeling weights words by the frequency of word occurrence in a document, assuming that all documents have equal importance.
+Documents in my model were weighted according to their number of hits for that document, to reflect their varying importance.
+
 Here are the topics present in the 15 000 Germanwings documents, according to non-negative matrix factorization:
 
     .... [slide of topics]
@@ -29,11 +35,6 @@ But in addition, interest in the topics changed over time, as we would expect wi
 
     .... [slide of topic versus time]
 
-Technical notes
-
-NMF + wordclouds 
-Ordinarily, topic modeling weights words by the frequency of word occurrence in a document, assuming that all documents have equal importance.
-Documents in my model were weighted according to their number of hits for that document, to reflect their varying importance.
 
 Tools
 - pandas/numpy
