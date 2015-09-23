@@ -415,7 +415,7 @@ def main():
     # extract_documents()
     # clean_documents()
     # topic_modeling()
-    # topic_modeling2()
+    topic_modeling2()
     topic_modeling3()
 
 
