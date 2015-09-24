@@ -395,7 +395,7 @@ def topic_modeling3():
 
     shared_params = {
         'size': 2.5,
-        'aspect': 3.0,
+        'aspect': 1.75,
         'kind': "bar",
         'palette': "muted",
         'legend_out': True,
@@ -403,9 +403,11 @@ def topic_modeling3():
 
     print("Columns in topic_hits_by_country: {0}".format(topic_hits_by_country.columns))
     plot_by_country = sns.factorplot(x="country", y="count", hue="topic", data=topic_hits_by_country, **shared_params)
+    plt.title("Topic hits by country")
 
     print("Columns in topic_hits_by_day.columns: {0}".format(topic_hits_by_day.columns))
     plot_by_date = sns.factorplot(x="day", y="count", hue="topic", data=topic_hits_by_day, **shared_params)
+    plt.title("Topic hits by day of month")
 
     plot_by_country.savefig('hits_by_country.png')
     plot_by_date.savefig('hits_by_date.png')
